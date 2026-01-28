@@ -3,167 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rosabella Flower</title>
+    <title>Rosabella Flowers - Madar X</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* إعدادات الألوان والمتغيرات */
         :root {
-            --bg-body: #f3f5f4;
-            --bg-card: #dde6eb;
-            --text-main: #333333;
-            --text-sub: #555555;
-            --footer-bg: #887e22;
-            --shadow: 0 4px 15px rgba(0,0,0,0.08);
-            --accent-glow: #887e22;
-            --stripe-color: rgba(136, 126, 34, 0.05);
+            --bg-body: #fdfafb;
+            --bg-card: #ffffff;
+            --text-main: #2d3436;
+            --text-sub: #636e72;
+            --footer-bg: #2d3436;
+            --shadow: 0 10px 25px rgba(0,0,0,0.05);
+            --accent-glow: #e91e63; /* لون وردي يناسب Rosabella */
         }
 
         .dark-mode {
-            --bg-body: #121212;
-            --bg-card: #1e1e1e;
-            --text-main: #ffffff;
-            --text-sub: #cccccc;
-            --footer-bg: #181818;
-            --shadow: 0 4px 20px rgba(0,0,0,0.4);
-            --accent-glow: #2196F3;
-            --stripe-color: rgba(255, 255, 255, 0.03);
+            --bg-body: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --text-main: #f5f5f5;
+            --text-sub: #b2bec3;
+            --footer-bg: #000000;
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+            --accent-glow: #ff4081;
         }
 
         body {
             background-color: var(--bg-body);
             color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: all 0.4s ease;
+            transition: background 0.3s ease;
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 20px,
-                var(--stripe-color) 20px,
-                var(--stripe-color) 40px
-            );
-            z-index: -1;
-            pointer-events: none;
+        .card-id {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 10px;
+            opacity: 0.5;
+            letter-spacing: 1px;
         }
 
         .toggle-wrapper {
-            position: fixed;
+            position: absolute;
             top: 20px;
             right: 20px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            z-index: 100;
         }
 
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-
+        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-
         .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; transition: .4s; border-radius: 20px;
         }
-
         .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px; width: 16px;
-            left: 4px; bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
+            position: absolute; content: ""; height: 14px; width: 14px;
+            left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
         }
-
-        input:checked + .slider { background-color: #2196F3; }
-        input:checked + .slider:before { transform: translateX(26px); }
+        input:checked + .slider { background-color: var(--accent-glow); }
+        input:checked + .slider:before { transform: translateX(20px); }
 
         .header-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             margin-top: 60px;
-            padding: 0 15px;
-            box-sizing: border-box;
+            text-align: center;
         }
 
-        .image-placeholder {
-            width: 100%;
-            height: 250px;
-            background: #ddd;
-            border-radius: 20px;
+        /* أنيميشن الوميض */
+        @keyframes blink-glow {
+            0% { box-shadow: 0 0 10px var(--accent-glow); }
+            50% { box-shadow: 0 0 25px var(--accent-glow), 0 0 40px var(--accent-glow); }
+            100% { box-shadow: 0 0 10px var(--accent-glow); }
+        }
+
+        .profile-img {
+            width: 230px;
+            height: 230px;
+            margin: 0 auto;
+            border-radius: 50%;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 3px solid transparent;
-            transition: all 0.5s ease;
-            animation: borderGlow 2s infinite alternate;
+            border: 4px solid var(--bg-card);
+            background: #fff;
+            animation: blink-glow 2s infinite ease-in-out;
         }
 
-        @keyframes borderGlow {
-            from { border-color: transparent; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-            to { border-color: var(--accent-glow); box-shadow: 0 0 20px var(--accent-glow); }
-        }
-
-        .image-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .profile-img img { width: 100%; height: 100%; object-fit: contain; }
 
         .info-card {
-            width: 90%;
-            max-width: 470px;
-            background: var(--bg-card);
-            margin-top: -30px;
-            padding: 20px;
-            border-radius: 15px;
             text-align: center;
-            box-shadow: var(--shadow);
-            z-index: 10;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-sizing: border-box;
-            cursor: pointer;
-            user-select: none;
-            backdrop-filter: blur(5px);
+            margin-top: 15px;
         }
 
-        .info-card:active {
-            transform: scale(0.98) translateX(25px);
-            box-shadow: 0 0 30px var(--accent-glow);
-            border: 1px solid var(--accent-glow);
-        }
-
-        .info-card h1 { margin: 0; font-size: 22px; color: var(--text-main); }
-        .info-card p { margin: 5px 0 0; font-size: 14px; color: var(--text-sub); font-weight: 500; line-height: 1.4; }
+        .info-card h1 { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-main); }
+        .info-card p { margin: 5px 0; font-size: 16px; color: var(--accent-glow); font-weight: 600; }
 
         .container {
             width: 90%;
-            max-width: 500px;
+            max-width: 400px;
             margin: 25px 0;
             display: flex;
             flex-direction: column;
@@ -173,63 +114,44 @@
         .slide {
             display: flex;
             align-items: center;
-            padding: 14px 20px;
+            padding: 14px 18px;
             background: var(--bg-card);
             border-radius: 12px;
             text-decoration: none;
             color: var(--text-main);
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            opacity: 0;
-            transform: translateX(-20px);
-            animation: fadeInSlide 0.5s forwards;
-            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            border-right: 4px solid transparent;
         }
 
-        @keyframes fadeInSlide {
-            to { opacity: 1; transform: translateX(0); }
-        }
+        .slide:hover { transform: scale(1.02); }
 
-        .slide.clicked {
-            transform: translateX(45px) !important;
-            box-shadow: -10px 5px 25px var(--glow-color) !important;
-        }
+        .icon { width: 24px; height: 24px; margin-left: 15px; }
 
-        .icon {
-            width: 30px;
-            height: 30px;
-            margin-left: 15px;
-        }
-
-        .fb { --glow-color: #1877f2; border-left: 4px solid #1877f2; }
-        .ig { --glow-color: #e1306c; border-left: 4px solid #e1306c; }
-        .wa { --glow-color: #25d366; border-left: 4px solid #25d366; }
-        .web { --glow-color: #4CAF50; border-left: 4px solid #4CAF50; }
+        .web { border-right-color: #e91e63; }
+        .fb { border-right-color: #1877f2; }
+        .ig { border-right-color: #e1306c; }
+        .wa { border-right-color: #25d366; }
 
         footer {
             margin-top: auto;
             width: 100%;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             background: var(--footer-bg);
-            font-size: 13px;
-            color: white;
-            z-index: 10;
+            font-size: 12px;
+            color: #ccc;
         }
-        footer a { color: #ffffff; text-decoration: underline; }
-
-        .slide:nth-child(1) { animation-delay: 0.1s; }
-        .slide:nth-child(2) { animation-delay: 0.2s; }
-        .slide:nth-child(3) { animation-delay: 0.3s; }
-        .slide:nth-child(4) { animation-delay: 0.4s; }
+        footer a { color: #fff; text-decoration: none; font-weight: bold; }
 
     </style>
 </head>
 <body>
 
+    <div class="card-id">ID: A003</div>
+
     <div class="toggle-wrapper">
-        <span>🌙</span>
         <label class="switch">
             <input type="checkbox" id="darkModeToggle">
             <span class="slider"></span>
@@ -237,56 +159,59 @@
     </div>
 
     <div class="header-container">
-        <div class="image-placeholder">
+        <div class="profile-img">
             <img src="https://surveyheartmedia.s3.ap-south-1.amazonaws.com/files/cd0c33b0594e4433d1a8ca61f11ef7/69622f7e459753fa3e3859ce/sh_1768583805668.png" alt="Rosabella Flowers">
         </div>
     </div>
-    <br><br>
 
-    <div class="info-card" id="nameCard">
+    <div class="info-card">
         <h1>Rosabella Flowers</h1>
         <p>Flowers and gifts</p>
     </div>
 
     <div class="container">
-        <a href="https://www.facebook.com/share/17Xh7uH21U/" class="slide fb">
+        <a href="https://rosabellaflower.com" class="slide web" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" class="icon">
+            الموقع الإلكتروني - Website
+        </a>
+
+        <a href="https://www.facebook.com/share/17Xh7uH21U/" class="slide fb" target="_blank">
             <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" class="icon">
             فيسبوك - Facebook
         </a>
-        <a href="https://www.instagram.com/rosabellaflowerszag?igsh=MWtsbWxuODE0ZzZxYw==" class="slide ig">
+        
+        <a href="https://www.instagram.com/rosabellaflowerszag?igsh=MWtsbWxuODE0ZzZxYw==" class="slide ig" target="_blank">
             <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="icon">
             انستجرام - Instagram
         </a>
-        <a href="https://wa.me/+201226182272" class="slide wa">
+
+        <a href="https://wa.me/+201226182272" class="slide wa" target="_blank">
             <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="icon">
             واتساب - WhatsApp
-        </a>
-        <a href="http://rosabellaflower.com" class="slide web">
-            <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" class="icon">
-            الموقع الإلكتروني - Website
         </a>
     </div>
 
     <footer>
-        By <a href="https://wa.me/message/SCIV7KEDVO3NH1" target="_blank"> Ahmed Emad </a>
+        By <a href="https://ielomda75-hash.github.io/madarx/" target="_blank">Madar X</a>
     </footer>
 
     <script>
         const toggle = document.getElementById('darkModeToggle');
-        toggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode');
-        });
+        const body = document.body;
 
-        const slides = document.querySelectorAll('.slide');
-        slides.forEach(slide => {
-            slide.addEventListener('click', function(e) {
-                e.preventDefault();
-                const url = this.getAttribute('href');
-                this.classList.add('clicked');
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 350);
-            });
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            toggle.checked = true;
+        }
+
+        toggle.addEventListener('change', () => {
+            if (toggle.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
         });
     </script>
 
